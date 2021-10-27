@@ -24,42 +24,41 @@ void dimTo50()
   led_update();
 }
 
-/*
+
 void soundFromHell()
 {
   static char note_state = 0;
   switch(note_state){
   case 0:
-    buzzer_set_period();
+    buzzer_set_period(2551);
       note_state++;
       break;
   case 2:
-    buzzer_set_period();
+    buzzer_set_period(3822);
     note_state++;
     break;
   case 6:
-    buzzer_set_period();
+    buzzer_set_period(5000);
     note_state++;
     break;
   case 10:
-    buzzer_set_period();
+    buzzer_set_period(3405);
     note_state++;
     break;
   case 11:
-    buzzer_set_period();
+    buzzer_set_period(5000);
     note_state++;
     break;
   case 15:
-    buzzer_set_period();
+    buzzer_set_period(2551);
     note_state++;
     break;
   case 16:
-    buzzer_set_period();
-    note_state++;
+    buzzer_set_period(3405);
+    note_state = 0;
     break;
   }
 }
-*/
 
 void soundUp()
 { //frequency is raised
@@ -71,7 +70,7 @@ void soundUp()
   }
 }
 
-void SoundDown()
+void soundDown()
 { // frequency is lowered
   static long cycle = 0;
   buzzer_set_period(cycle);
@@ -87,7 +86,7 @@ void main_state()
   case 1:
     green_on = 1; //green light is on while siren pitch is raised
     red_on = 0;
-    SoundUp();
+    soundUp();
     break;
   case 2:
     green_on = 0; //red light is on while siren pitch is lowered

@@ -11,7 +11,7 @@ AS              = msp430-elf-as
 all: game.elf 
 
 #additional rules for files
-game.elf: ${COMMON_OBJECTS} main.o stateMachines.o switches.o buzzer.o led.o wdInterruptHandler.o p2_interrupt_handler.o /lib/libTimer.a
+game.elf: ${COMMON_OBJECTS} main.o stateMachines.o switches.o buzzer.o led.o wdInterruptHandler.o p2_interrupt_handler.o ../lib/libTimer.a
 	${CC} ${CFLAGS} ${LDFLAGS} -o $@ $^
 
 load: game.elf

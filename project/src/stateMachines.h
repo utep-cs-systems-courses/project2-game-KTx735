@@ -2,8 +2,8 @@
 #define stateMachine_included
 
 void dimTo50();
-void SoundUp();
-void SoundDown();
+void soundUp();
+void soundDown();
 void main_state();
 
 #endif // included
