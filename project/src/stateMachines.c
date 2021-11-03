@@ -5,26 +5,95 @@
 #include "switches.h"
 
 char button_state;
+char lightstate = 0;
+char state = 0;
 
-void dimTo50()
-{ //lights are dimmed by 50% using states
-  static char state = 0;
+void redAt50()
+{
   switch(state){
   case 0:
     red_on = 1;
-    green_on = 1;
     state = 1;
     break;
-  case 1:
+  case 2:
     red_on = 0;
-    green_on = 0;
     state = 0;
     break;
   }
   led_update();
 }
 
+void redAt75()
+{
+  switch(state){
+  case 0:
+    red_on = 1;
+    state = 1;
+    break;
+  case 1:
+    red_on = 1;
+    state = 2;
+    break;
+  case 2:
+    red_on = 0;
+    state = 0;
+    break;
+  }
+  led_update();
+}
 
+void redAt25()
+{
+  switch(state){
+  case 0:
+    red_on = 0;
+    state = 1;
+    break;
+  case 1:
+    red_on = 0;
+    state = 2;
+    break;
+  case 2:
+    red_on = 1;
+    state = 0;
+    break;
+  }
+  led_update();
+}
+
+void greenOn()
+{
+  green_on = 1;
+  red_on = 0;
+  led_update();
+}
+
+void changeLight()
+{
+  static char lightState = 0;
+  switch(lightState){
+  case 0:
+    redAt50();
+    redAt50();
+    lightState = 1;
+    break;
+  case 1:
+    redAt75();
+    redAt75();
+    redAt75();
+    lightState = 2;
+    break;
+  case 2:
+    redAt25();
+    redAt25();
+    redAt25();
+    lightState = 0;
+      break;
+  }
+}
+
+//Complex test
+/*
 void soundFromHell()
 {
   static char note_state = 0;
@@ -59,6 +128,7 @@ void soundFromHell()
     break;
   }
 }
+*/
 
 void soundUp()
 { //frequency is raised
@@ -78,31 +148,4 @@ void soundDown()
   if(cycle == 5000){
     cycle = 0;
   }
-}
-
-void main_state()
-{
-  switch(button_state){
-  case 1:
-    green_on = 1; //green light is on while siren pitch is raised
-    red_on = 0;
-    soundUp();
-    break;
-  case 2:
-    green_on = 0; //red light is on while siren pitch is lowered
-    red_on = 1;
-    soundDown();
-    break;
-  case 3:
-    buzzer_set_period(0); //buzzer turned off
-    dimTo50();                //lights dimmed to 25%
-    dimTo50();
-    break;
-  case 4:
-    buzzer_set_period(0); //buzzer turned off and both lights are turned on
-    red_on = 1;
-    green_on = 1;
-  }
-  led_changed = 1;
-  led_update();
 }

@@ -16,14 +16,10 @@ void led_init()
 void led_update()
 {
   static int blink_count = 0;
-  if (led_changed) {
     char ledFlags = redVal[red_on] | greenVal[green_on];; /* by default, no LEDs on */
-    
-    //ledFlags |= switch_state_down ? LED_GREEN : 0;
-    //ledFlags |= switch_state_down ? 0 : LED_RED;
-  
-    P1OUT &= (0xff - LEDS) | ledFlags; // clear bits for off leds
+     
+    P1OUT &= (0xff^LEDS) | ledFlags; // clear bits for off leds
     P1OUT |= ledFlags;         // set bits for on leds
-  }
+    led_changed = 0;
 }
 
